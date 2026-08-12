@@ -4,6 +4,7 @@ import { LenisSmoothScroll } from './components/LenisSmoothScroll';
 import { WebGLCanvasBackground } from './components/WebGLCanvasBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
+import { HeroHeader } from './components/HeroHeader';
 import { VoiceRecorder } from './components/VoiceRecorder';
 import { TextToVoiceStudio } from './components/TextToVoiceStudio';
 import { CallSimulator } from './components/CallSimulator';
@@ -67,8 +68,9 @@ export const App: React.FC = () => {
 
         <div className="relative z-10">
           <Navbar activeTab={activeTab} setActiveTab={setActiveTab} activeModel={activeModel} />
+          <HeroHeader />
 
-          <main ref={mainRef} className="pb-12">
+          <main ref={mainRef} className="pb-16">
             {activeTab === 'train' && (
               <VoiceRecorder onModelCreated={handleModelCreated} existingModels={models} />
             )}
@@ -92,7 +94,7 @@ export const App: React.FC = () => {
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-md shadow-cyan-500/50" />
-              <span className="font-bold text-slate-300">VocaClone Studio — Awwwards Phase 1 Complete</span>
+              <span className="font-bold text-slate-300">VocaClone Studio — Overhauled Awwwards Edition</span>
             </div>
             <div className="flex space-x-4 text-slate-400 font-medium">
               <a href="mailto:divyanshjoshidev@gmail.com" className="hover:text-cyan-400 transition-colors">divyanshjoshidev@gmail.com</a>

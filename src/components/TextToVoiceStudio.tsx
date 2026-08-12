@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Play, Square, Download, Sparkles, Volume2, Settings2, FileText, Cpu, CheckCircle } from 'lucide-react';
+import { Play, Square, Download, Sparkles, Volume2, FileText, Cpu, CheckCircle, Gauge, Zap } from 'lucide-react';
 import type { VoiceModel } from '../types';
 import { synthesizeTextInClonedVoice } from '../services/voiceSynthesizer';
 
@@ -11,7 +11,7 @@ interface TextToVoiceStudioProps {
 
 const PRESET_SCRIPTS = [
   {
-    title: 'Product Pitch',
+    title: 'Karta Product Pitch',
     text: "Hello Vijaypal, I built this custom voice AI studio to demonstrate real-time audio synthesis, dynamic tool calling, and low-latency voice interaction for Karta."
   },
   {
@@ -27,7 +27,6 @@ const PRESET_SCRIPTS = [
 export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, activeModel, onSelectModel }) => {
   const [text, setText] = useState(PRESET_SCRIPTS[0].text);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [activeWordIndex, setActiveWordIndex] = useState<number | null>(null);
   const [highlightRange, setHighlightRange] = useState<{ start: number; length: number } | null>(null);
   const [speedMultiplier, setSpeedMultiplier] = useState(1.0);
   const synthesisHandleRef = useRef<{ stop: () => void; finished: Promise<void> } | null>(null);
@@ -70,36 +69,22 @@ export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, ac
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 py-6 px-4">
-      {/* Banner */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 relative overflow-hidden backdrop-blur-md">
-        <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="flex items-center space-x-3">
-          <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-indigo-400">
-            <FileText className="w-6 h-6" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-slate-100">Step 2: Read Written Text in Your Voice</h2>
-            <p className="text-sm text-slate-400">
-              Type or paste any written text, script, or email. The system synthesizes natural audio using your custom trained voice model.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left Column: Script Input & Highlights */}
-        <div className="md:col-span-2 space-y-5 bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+    <div className="max-w-6xl mx-auto space-y-6 py-4 px-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left 2 Columns: Script Input & Karaoke Teleprompter */}
+        <div className="lg:col-span-2 space-y-6 glass-card p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Enter Written Text to Synthesize
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-2">
+              <FileText className="w-4 h-4 text-indigo-400" />
+              <span>Written Script Input</span>
             </label>
-            <div className="flex space-x-1">
+
+            <div className="flex space-x-1.5">
               {PRESET_SCRIPTS.map((preset, idx) => (
                 <button
                   key={idx}
                   onClick={() => setText(preset.text)}
-                  className="text-xs px-2.5 py-1 rounded-md bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 transition-colors"
+                  className="text-xs px-3 py-1 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 transition-colors font-medium border border-slate-800"
                 >
                   {preset.title}
                 </button>
@@ -110,19 +95,25 @@ export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, ac
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            rows={6}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 leading-relaxed font-mono transition-colors"
+            rows={5}
+            className="w-full bg-slate-950/90 border border-slate-800/80 rounded-2xl p-4 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 leading-relaxed font-mono transition-colors shadow-inner"
             placeholder="Type or paste your text script here..."
           />
 
-          {/* Real-time Teleprompter / Highlighting Preview */}
-          <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 text-sm leading-relaxed min-h-[80px]">
-            <span className="text-xs font-semibold text-slate-500 block mb-1">Live Teleprompter Output:</span>
-            <p className="text-slate-200">
+          {/* Karaoke Teleprompter Box */}
+          <div className="p-5 bg-slate-950/90 rounded-2xl border border-slate-800/80 text-sm leading-relaxed min-h-[90px] relative shadow-inner">
+            <div className="flex items-center justify-between text-xs text-slate-500 mb-2 border-b border-slate-800 pb-2">
+              <span className="font-bold uppercase tracking-wider text-indigo-400 flex items-center space-x-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Live Audio Teleprompter Output</span>
+              </span>
+              <span>{text.split(' ').length} words</span>
+            </div>
+            <p className="text-slate-200 leading-relaxed font-medium">
               {highlightRange ? (
                 <>
                   <span>{text.slice(0, highlightRange.start)}</span>
-                  <span className="bg-indigo-500 text-white font-bold px-1 rounded shadow-sm">
+                  <span className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold px-1.5 py-0.5 rounded-md shadow-md mx-0.5 animate-pulse">
                     {text.slice(highlightRange.start, highlightRange.start + highlightRange.length)}
                   </span>
                   <span>{text.slice(highlightRange.start + highlightRange.length)}</span>
@@ -133,26 +124,26 @@ export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, ac
             </p>
           </div>
 
-          {/* Controls Bar */}
+          {/* Audio Controls Bar */}
           <div className="flex items-center justify-between pt-2">
             <div className="flex items-center space-x-3">
               {!isPlaying ? (
                 <button
                   disabled={!activeModel || !text.trim()}
                   onClick={handleGenerateAudio}
-                  className={`flex items-center space-x-2 py-3 px-6 rounded-xl font-semibold text-sm transition-all ${
+                  className={`flex items-center space-x-2 py-3.5 px-6 rounded-2xl font-bold text-sm transition-all ${
                     activeModel && text.trim()
-                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-600/25'
-                      : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                      ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white shadow-xl shadow-indigo-600/30 scale-[1.01]'
+                      : 'bg-slate-900 text-slate-600 cursor-not-allowed border border-slate-800'
                   }`}
                 >
                   <Play className="w-4 h-4 fill-current" />
-                  <span>Generate & Speak Script</span>
+                  <span>Synthesize & Speak Script</span>
                 </button>
               ) : (
                 <button
                   onClick={stopPlayback}
-                  className="flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-white py-3 px-6 rounded-xl font-semibold text-sm shadow-lg shadow-rose-600/25 transition-all"
+                  className="flex items-center space-x-2 bg-rose-600 hover:bg-rose-500 text-white py-3.5 px-6 rounded-2xl font-bold text-sm shadow-xl shadow-rose-600/30 transition-all animate-pulse"
                 >
                   <Square className="w-4 h-4 fill-current" />
                   <span>Stop Playback</span>
@@ -160,16 +151,17 @@ export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, ac
               )}
             </div>
 
-            <div className="flex items-center space-x-2 text-xs text-slate-400">
+            {/* Speed Selector */}
+            <div className="flex items-center space-x-2 text-xs text-slate-400 font-medium">
               <span>Speed:</span>
-              {[0.8, 1.0, 1.25].map((speed) => (
+              {[0.8, 1.0, 1.25, 1.5].map((speed) => (
                 <button
                   key={speed}
                   onClick={() => setSpeedMultiplier(speed)}
-                  className={`px-2.5 py-1 rounded-md transition-colors ${
+                  className={`px-3 py-1.5 rounded-xl transition-all font-mono font-bold ${
                     speedMultiplier === speed
-                      ? 'bg-indigo-600 text-white font-bold'
-                      : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                      : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
                   }`}
                 >
                   {speed}x
@@ -179,34 +171,36 @@ export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, ac
           </div>
         </div>
 
-        {/* Right Column: Model Selection & Audio Telemetry */}
-        <div className="space-y-5 bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
-          <div>
-            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center space-x-1.5">
+        {/* Right Column: Model Selection Card */}
+        <div className="space-y-6 glass-card p-6 rounded-3xl border border-slate-800/80 shadow-2xl flex flex-col justify-between">
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-2">
               <Cpu className="w-4 h-4 text-indigo-400" />
-              <span>Select Voice Model</span>
+              <span>Voice Model Registry</span>
             </h3>
 
-            <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+            <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
               {models.map((model) => {
                 const isSelected = activeModel?.id === model.id;
                 return (
                   <div
                     key={model.id}
                     onClick={() => onSelectModel(model)}
-                    className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-indigo-950/40 border-indigo-500/50 shadow-md shadow-indigo-500/10'
-                        : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                        ? 'bg-indigo-950/50 border-indigo-500/60 shadow-lg shadow-indigo-500/15 scale-[1.01]'
+                        : 'bg-slate-950/80 border-slate-800/80 hover:border-slate-700'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center justify-between mb-1.5">
                       <span className="font-bold text-sm text-slate-100">{model.name}</span>
                       {isSelected && <CheckCircle className="w-4 h-4 text-indigo-400" />}
                     </div>
                     <div className="flex items-center justify-between text-xs text-slate-400">
-                      <span>{model.pitchCategory}</span>
-                      <span className="text-indigo-300 font-mono">{model.pitchHz} Hz</span>
+                      <span className="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-800 font-medium text-indigo-300">
+                        {model.pitchCategory}
+                      </span>
+                      <span className="text-cyan-400 font-mono font-bold">{model.pitchHz} Hz</span>
                     </div>
                   </div>
                 );
@@ -214,19 +208,21 @@ export const TextToVoiceStudio: React.FC<TextToVoiceStudioProps> = ({ models, ac
             </div>
           </div>
 
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2 text-xs">
-            <span className="text-slate-400 font-semibold block">Model Characteristics:</span>
+          <div className="p-4 bg-slate-950/90 rounded-2xl border border-slate-800/80 space-y-2 text-xs font-medium">
+            <span className="text-slate-400 font-bold block uppercase tracking-wider text-[10px]">
+              Active Synthesis Metrics
+            </span>
             <div className="flex justify-between text-slate-300">
               <span>Target Pitch:</span>
-              <span className="font-mono text-cyan-400">{activeModel?.pitchHz || 140} Hz</span>
+              <span className="font-mono text-cyan-400 font-bold">{activeModel?.pitchHz || 145} Hz</span>
             </div>
             <div className="flex justify-between text-slate-300">
-              <span>Speech Pace:</span>
-              <span className="font-mono text-indigo-300">{((activeModel?.speakingRate || 1.0) * speedMultiplier).toFixed(2)}x</span>
+              <span>Speech Rate:</span>
+              <span className="font-mono text-indigo-300 font-bold">{((activeModel?.speakingRate || 1.0) * speedMultiplier).toFixed(2)}x</span>
             </div>
             <div className="flex justify-between text-slate-300">
-              <span>Synthesis Method:</span>
-              <span className="text-emerald-400 font-medium">Neural Web Audio Synthesis</span>
+              <span>Engine:</span>
+              <span className="text-emerald-400 font-semibold">Web Audio Neural Synthesis</span>
             </div>
           </div>
         </div>

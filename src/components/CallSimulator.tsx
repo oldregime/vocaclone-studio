@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PhoneCall, PhoneOff, PhoneIncoming, Mic, Volume2, Sparkles, CheckCircle2, ShieldCheck, UserCheck, Bot } from 'lucide-react';
+import { PhoneCall, PhoneOff, PhoneIncoming, Mic, Volume2, Sparkles, CheckCircle2, ShieldCheck, UserCheck, Bot, Radio } from 'lucide-react';
 import type { VoiceModel, SimulatedCall } from '../types';
 import { synthesizeTextInClonedVoice } from '../services/voiceSynthesizer';
 
@@ -16,7 +16,7 @@ const CALL_SCENARIOS: SimulatedCall[] = [
     scenarioDescription: 'Inquiring about your B.Tech CS background, voice agent experience, and availability.',
     initialMessage: 'Hey Divyansh, thanks for reaching out! I saw your email regarding the PM Intern position. Have you built anything in voice AI recently?',
     suggestedAnswers: [
-      'Yes Vijaypal! I engineered this custom Voice AI Studio called VocaClone to demonstrate real-time audio synthesis, voice activity detection, and tool calling.',
+      'Yes Vijaypal! I engineered VocaClone Studio to demonstrate real-time audio synthesis, voice activity detection, and tool calling.',
       'I built a Medical AI suite with sub-5s matching using LangGraph, and integrated real-time WebRTC audio processing.'
     ]
   },
@@ -75,7 +75,6 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
       setCallDuration((prev) => prev + 1);
     }, 1000);
 
-    // Initial caller audio turn
     setTranscript([
       {
         sender: 'caller',
@@ -93,7 +92,6 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
   const respondWithVoiceClone = async (answerText: string) => {
     if (!activeModel) return;
 
-    // Append to transcript
     setTranscript((prev) => [
       ...prev,
       {
@@ -111,31 +109,15 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 py-6 px-4">
-      {/* Banner */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 relative overflow-hidden backdrop-blur-md">
-        <div className="absolute -top-12 -right-12 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="flex items-center space-x-3">
-          <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded-xl text-purple-400">
-            <PhoneCall className="w-6 h-6" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-slate-100">Step 3: Attend Calls with Your AI Voice Clone</h2>
-            <p className="text-sm text-slate-400">
-              Test how your trained voice model answers incoming phone calls, conducts conversations, and handles inquiries on your behalf.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left Column: Call Simulator Phone Screen */}
-        <div className="md:col-span-1 bg-slate-900/60 border border-slate-800 p-6 rounded-3xl flex flex-col items-center justify-between min-h-[480px] relative overflow-hidden shadow-2xl">
-          {/* Top Notch / Header */}
-          <div className="w-full flex justify-between items-center text-xs text-slate-400 border-b border-slate-800 pb-3">
-            <div className="flex items-center space-x-1.5">
-              <ShieldCheck className="w-4 h-4 text-purple-400" />
-              <span>AI Telephony Protocol</span>
+    <div className="max-w-6xl mx-auto space-y-6 py-4 px-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column: 3D Smartphone UI Frame */}
+        <div className="lg:col-span-1 glass-card p-6 rounded-3xl border border-slate-800/80 shadow-2xl flex flex-col items-center justify-between min-h-[500px] relative overflow-hidden">
+          {/* Phone Status Bar */}
+          <div className="w-full flex justify-between items-center text-xs text-slate-400 border-b border-slate-800/80 pb-3">
+            <div className="flex items-center space-x-1.5 font-semibold text-purple-400">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Voice AI Phone Node</span>
             </div>
             {callState === 'connected' && (
               <span className="text-emerald-400 font-mono font-bold animate-pulse">
@@ -145,24 +127,24 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
           </div>
 
           {/* Caller Details */}
-          <div className="text-center space-y-3 my-auto">
-            <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-purple-600 to-cyan-500 p-1 shadow-lg shadow-purple-500/20 flex items-center justify-center text-3xl">
+          <div className="text-center space-y-4 my-auto">
+            <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 p-1 shadow-xl shadow-purple-500/25 flex items-center justify-center text-4xl">
               {scenario.callerAvatar}
             </div>
             <div>
-              <h3 className="font-bold text-lg text-slate-100">{scenario.callerName}</h3>
-              <p className="text-xs text-purple-300 font-medium">{scenario.callerRole}</p>
+              <h3 className="font-extrabold text-xl text-slate-100">{scenario.callerName}</h3>
+              <p className="text-xs text-purple-300 font-semibold">{scenario.callerRole}</p>
             </div>
 
             {callState === 'ringing' && (
-              <p className="text-xs text-amber-400 font-bold animate-bounce">
-                Incoming Call...
+              <p className="text-xs text-amber-400 font-bold animate-bounce tracking-wide">
+                Incoming Phone Call...
               </p>
             )}
 
             {callState === 'connected' && (
-              <div className="flex items-center justify-center space-x-2 text-xs text-emerald-400">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <div className="flex items-center justify-center space-x-2 text-xs text-emerald-400 font-bold">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
                 <span>AI Voice Clone Active</span>
               </div>
             )}
@@ -173,7 +155,7 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
             {callState === 'idle' || callState === 'ended' ? (
               <button
                 onClick={triggerIncomingCall}
-                className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white py-3 rounded-2xl font-bold text-sm shadow-lg shadow-purple-600/30 transition-all transform active:scale-98"
+                className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-purple-600/30 transition-all scale-[1.01]"
               >
                 <PhoneIncoming className="w-4 h-4 animate-bounce" />
                 <span>Simulate Incoming Call</span>
@@ -182,14 +164,14 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={declineCall}
-                  className="flex items-center justify-center space-x-1.5 bg-rose-600 hover:bg-rose-500 text-white py-3 rounded-2xl font-bold text-xs shadow-lg shadow-rose-600/30 transition-all"
+                  className="flex items-center justify-center space-x-1.5 bg-rose-600 hover:bg-rose-500 text-white py-3.5 rounded-2xl font-bold text-xs shadow-lg shadow-rose-600/30 transition-all"
                 >
                   <PhoneOff className="w-4 h-4" />
                   <span>Decline</span>
                 </button>
                 <button
                   onClick={acceptCall}
-                  className="flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-2xl font-bold text-xs shadow-lg shadow-emerald-600/30 transition-all animate-pulse"
+                  className="flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 rounded-2xl font-bold text-xs shadow-lg shadow-emerald-600/30 transition-all animate-pulse"
                 >
                   <PhoneCall className="w-4 h-4" />
                   <span>Answer Call</span>
@@ -198,7 +180,7 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
             ) : (
               <button
                 onClick={declineCall}
-                className="w-full flex items-center justify-center space-x-2 bg-rose-600 hover:bg-rose-500 text-white py-3 rounded-2xl font-bold text-sm shadow-lg shadow-rose-600/30 transition-all"
+                className="w-full flex items-center justify-center space-x-2 bg-rose-600 hover:bg-rose-500 text-white py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-rose-600/30 transition-all"
               >
                 <PhoneOff className="w-4 h-4" />
                 <span>End Call</span>
@@ -207,14 +189,15 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
           </div>
         </div>
 
-        {/* Right Column: Scenario Selector & Live Call Dialogue */}
-        <div className="md:col-span-2 space-y-5 bg-slate-900/40 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+        {/* Right Column: Call Scenario Selector & Live Transcript */}
+        <div className="lg:col-span-2 space-y-6 glass-card p-6 rounded-3xl border border-slate-800/80 shadow-2xl flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Select Call Scenario
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-2">
+                <Radio className="w-4 h-4 text-purple-400" />
+                <span>Select Telephony Scenario</span>
               </label>
-              <div className="flex space-x-1">
+              <div className="flex space-x-1.5">
                 {CALL_SCENARIOS.map((sc, idx) => (
                   <button
                     key={sc.id}
@@ -223,10 +206,10 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
                       setCallState('idle');
                       setTranscript([]);
                     }}
-                    className={`text-xs px-2.5 py-1 rounded-md transition-colors ${
+                    className={`text-xs px-3 py-1 rounded-xl transition-all font-medium ${
                       selectedScenarioIndex === idx
-                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                        : 'text-slate-500 hover:text-slate-300'
+                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm'
+                        : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-800'
                     }`}
                   >
                     Scenario #{idx + 1}
@@ -235,52 +218,54 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
               </div>
             </div>
 
-            <p className="text-xs text-slate-400 bg-slate-950 p-3 rounded-xl border border-slate-800">
-              <span className="font-semibold text-slate-200">Scenario Context: </span>
+            <p className="text-xs text-slate-300 bg-slate-950/90 p-4 rounded-2xl border border-slate-800/80 shadow-inner font-medium">
+              <span className="font-bold text-purple-400">Context: </span>
               {scenario.scenarioDescription}
             </p>
 
-            {/* Live Transcript Stream */}
-            <div className="space-y-3 min-h-[220px] max-h-[280px] overflow-y-auto p-4 bg-slate-950 rounded-xl border border-slate-800">
-              <span className="text-xs font-semibold text-slate-500 block mb-2">Live Call Transcript Stream:</span>
+            {/* Live Transcript Dialogue Stream */}
+            <div className="space-y-3 min-h-[220px] max-h-[280px] overflow-y-auto p-4 bg-slate-950/90 rounded-2xl border border-slate-800/80 shadow-inner">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                Live Speech Dialogue Stream
+              </span>
               {transcript.length === 0 ? (
-                <div className="text-center py-10 text-xs text-slate-600">
-                  Click "Simulate Incoming Call" and "Answer Call" to start the conversation stream.
+                <div className="text-center py-10 text-xs text-slate-600 font-medium">
+                  Click "Simulate Incoming Call" and "Answer Call" to start the live speech dialogue stream.
                 </div>
               ) : (
                 transcript.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`p-3 rounded-xl text-xs space-y-1 ${
+                    className={`p-4 rounded-2xl text-xs space-y-1 ${
                       item.sender === 'caller'
-                        ? 'bg-slate-900 border border-slate-800 text-slate-200 mr-8'
-                        : 'bg-purple-950/40 border border-purple-500/30 text-purple-100 ml-8'
+                        ? 'bg-slate-900/90 border border-slate-800 text-slate-200 mr-8 shadow-sm'
+                        : 'bg-purple-950/50 border border-purple-500/40 text-purple-100 ml-8 shadow-md'
                     }`}
                   >
-                    <div className="flex items-center justify-between text-[10px] text-slate-400">
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1">
                       <span className="font-bold flex items-center space-x-1">
                         {item.sender === 'caller' ? (
                           <span>{scenario.callerName}</span>
                         ) : (
-                          <span className="text-purple-300 flex items-center space-x-1">
-                            <Bot className="w-3 h-3 text-purple-400" />
+                          <span className="text-purple-300 flex items-center space-x-1 font-bold">
+                            <Bot className="w-3.5 h-3.5 text-purple-400" />
                             <span>My AI Voice Clone ({activeModel?.name || 'Cloned Voice'})</span>
                           </span>
                         )}
                       </span>
                       <span>{item.time}</span>
                     </div>
-                    <p className="leading-relaxed">{item.text}</p>
+                    <p className="leading-relaxed font-medium">{item.text}</p>
                   </div>
                 ))
               )}
             </div>
           </div>
 
-          {/* Quick AI Response Suggestions */}
+          {/* Quick AI Response Actions */}
           {callState === 'connected' && (
-            <div className="space-y-2 pt-2 border-t border-slate-800">
-              <label className="text-xs font-semibold text-purple-400 block">
+            <div className="space-y-2 pt-3 border-t border-slate-800/80">
+              <label className="text-xs font-bold text-purple-400 uppercase tracking-wider block">
                 Trigger AI Voice Clone Response:
               </label>
               <div className="grid grid-cols-1 gap-2">
@@ -288,10 +273,10 @@ export const CallSimulator: React.FC<CallSimulatorProps> = ({ activeModel }) => 
                   <button
                     key={idx}
                     onClick={() => respondWithVoiceClone(ans)}
-                    className="text-left text-xs bg-purple-900/20 hover:bg-purple-900/40 border border-purple-500/30 text-purple-200 p-2.5 rounded-xl transition-all hover:border-purple-400 flex items-center justify-between"
+                    className="text-left text-xs bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 text-purple-200 p-3 rounded-2xl transition-all hover:border-purple-400 flex items-center justify-between font-medium shadow-sm"
                   >
                     <span>"{ans}"</span>
-                    <Volume2 className="w-3.5 h-3.5 text-purple-400 flex-shrink-0 ml-2" />
+                    <Volume2 className="w-4 h-4 text-purple-400 flex-shrink-0 ml-2" />
                   </button>
                 ))}
               </div>

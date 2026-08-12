@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
   <style>
-    /* Material You Refined Design Tokens */
+    /* Google Material You Refined Tokens */
     :root {
       --md-sys-color-background: #0b0f17;
       --md-sys-color-surface: #131822;
@@ -29,8 +29,8 @@
       --md-sys-color-outline: #384355;
       --md-sys-color-on-surface: #f1f5f9;
       --md-sys-color-on-surface-variant: #94a3b8;
-      --md-sys-color-success: #34d399;
-      --md-sys-color-on-success: #064e3b;
+      --md-sys-color-success: #10b981;
+      --md-sys-color-on-success: #ffffff;
       --md-sys-color-error: #ffb4ab;
       --md-shape-corner-extra-large: 28px;
       --md-shape-corner-large: 18px;
@@ -55,7 +55,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top App Bar Header */
+    /* Header App Bar */
     .top-app-bar {
       background-color: rgba(19, 24, 34, 0.85);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -105,7 +105,7 @@
       font-weight: 500;
     }
 
-    /* Segmented Button Navigation */
+    /* Segmented Navigation */
     .segmented-nav {
       background-color: var(--md-sys-color-surface-container);
       padding: 5px;
@@ -208,8 +208,9 @@
     /* Studio Content Grid */
     .studio-grid {
       display: grid;
-      grid-template-columns: 1.9fr 1.1fr;
+      grid-template-columns: 1.8fr 1.2fr;
       gap: 1.75rem;
+      align-items: stretch;
     }
 
     @media (max-width: 868px) {
@@ -218,13 +219,16 @@
       }
     }
 
-    /* Cards */
+    /* Material You Cards */
     .md-card {
       background-color: var(--md-sys-color-surface-container);
       border-radius: var(--md-shape-corner-extra-large);
       padding: 1.85rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .card-label {
@@ -288,12 +292,14 @@
       height: 100%;
     }
 
-    /* BUTTON SYSTEM */
+    /* FABULOUS FIXED BUTTON STYLES */
     .btn-filled {
       background: linear-gradient(135deg, #a8c7fa 0%, #669df6 100%);
       color: var(--md-sys-color-on-primary);
       border: none;
-      padding: 0.9rem 1.75rem;
+      height: 48px;
+      min-height: 48px;
+      max-height: 48px;
       border-radius: var(--md-shape-corner-full);
       font-size: 0.9rem;
       font-weight: 700;
@@ -303,48 +309,53 @@
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      box-shadow: 0 4px 16px rgba(168, 199, 250, 0.3);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px rgba(168, 199, 250, 0.3);
+      transition: all 0.2s ease-in-out;
       width: 100%;
+      flex-shrink: 0;
     }
 
     .btn-filled:hover {
       background: linear-gradient(135deg, #c2e7ff 0%, #8ab4f8 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(168, 199, 250, 0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(168, 199, 250, 0.45);
     }
 
     .btn-filled:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
 
+    /* PERFECT FIXED SAVE VOICE MODEL BUTTON */
     .btn-save-model {
-      background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: #ffffff;
-      border: none;
-      padding: 0.95rem 1.75rem;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      height: 48px;
+      min-height: 48px;
+      max-height: 48px;
       border-radius: var(--md-shape-corner-full);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      box-shadow: 0 4px 18px rgba(52, 211, 153, 0.35);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s ease-in-out;
       width: 100%;
+      flex-shrink: 0;
     }
 
     .btn-save-model:hover {
-      background: linear-gradient(135deg, #6ee7b7 0%, #10b981 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 26px rgba(52, 211, 153, 0.5);
+      background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(52, 211, 153, 0.45);
     }
 
     .btn-save-model:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
 
     .btn-danger {
@@ -381,7 +392,7 @@
       border: 2px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 16px 48px rgba(0,0,0,0.6);
       text-align: center;
-      min-height: 460px;
+      min-height: 440px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -489,22 +500,24 @@
     <!-- TAB 1: TRAIN VOICE MODEL -->
     <div id="view-train" class="studio-grid">
       <div class="md-card">
-        <div class="card-label">
-          <span class="material-symbols-outlined">mic</span>
-          <span>Step 1: Record Sample Prompt</span>
-        </div>
+        <div>
+          <div class="card-label">
+            <span class="material-symbols-outlined">mic</span>
+            <span>Step 1: Record Sample Prompt</span>
+          </div>
 
-        <div style="margin-bottom: 1.25rem;">
-          <label style="font-size: 0.8rem; color: var(--md-sys-color-on-surface-variant); display: block; margin-bottom: 0.45rem; font-weight: 600;">Voice Model Identifier</label>
-          <input type="text" id="model-name-input" class="md-input" value="My Voice Model">
-        </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label style="font-size: 0.8rem; color: var(--md-sys-color-on-surface-variant); display: block; margin-bottom: 0.45rem; font-weight: 600;">Voice Model Identifier</label>
+            <input type="text" id="model-name-input" class="md-input" value="My Voice Model">
+          </div>
 
-        <div class="prompt-box" id="prompt-text-display">
-          "Hello, I am recording my voice sample to train my personal AI voice clone. I want this AI model to read written scripts and handle calls on my behalf."
-        </div>
+          <div class="prompt-box" id="prompt-text-display">
+            "Hello, I am recording my voice sample to train my personal AI voice clone. I want this AI model to read written scripts and handle calls on my behalf."
+          </div>
 
-        <div class="spectrum-container">
-          <canvas id="mic-canvas"></canvas>
+          <div class="spectrum-container">
+            <canvas id="mic-canvas"></canvas>
+          </div>
         </div>
 
         <button class="btn-filled" id="rec-btn" onclick="toggleRecording()">
@@ -514,14 +527,14 @@
       </div>
 
       <!-- Radar Card -->
-      <div class="md-card flex-col" style="display: flex; justify-content: space-between;">
+      <div class="md-card">
         <div>
           <div class="card-label">
             <span class="material-symbols-outlined">analytics</span>
             <span>Acoustic Profile Metrics</span>
           </div>
 
-          <div class="metric-list" style="margin-bottom: 1.75rem;">
+          <div class="metric-list" style="margin-bottom: 1.5rem;">
             <div class="metric-row">
               <span>Fundamental Pitch ($F_0$):</span>
               <span class="metric-val" id="pitch-hz">145 Hz</span>
@@ -541,25 +554,30 @@
           </div>
         </div>
 
-        <button class="btn-save-model" onclick="trainModel()">
-          <span class="material-symbols-outlined">task_alt</span>
-          <span>Save Voice Model</span>
-        </button>
+        <!-- PERFECTLY PROPORTIONED SAVE VOICE MODEL BUTTON -->
+        <div style="margin-top: auto; padding-top: 1rem;">
+          <button class="btn-save-model" onclick="trainModel()">
+            <span class="material-symbols-outlined">task_alt</span>
+            <span>Save Voice Model</span>
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- TAB 2: TEXT TO SPEECH STUDIO -->
     <div id="view-generate" class="studio-grid" style="display: none;">
       <div class="md-card">
-        <div class="card-label">
-          <span class="material-symbols-outlined">description</span>
-          <span>Script-to-Speech Editor</span>
-        </div>
+        <div>
+          <div class="card-label">
+            <span class="material-symbols-outlined">description</span>
+            <span>Script-to-Speech Editor</span>
+          </div>
 
-        <textarea id="script-input" class="md-textarea" rows="6">Hello, I built this custom voice AI studio to demonstrate real-time audio synthesis, dynamic tool calling, and low-latency voice interaction.</textarea>
+          <textarea id="script-input" class="md-textarea" rows="6">Hello, I built this custom voice AI studio to demonstrate real-time audio synthesis, dynamic tool calling, and low-latency voice interaction.</textarea>
 
-        <div class="prompt-box" style="margin-top: 1rem; font-style: normal; font-weight: 500;" id="teleprompter-box">
-          Live Teleprompter Output: <span id="teleprompter-text" style="color: #a8c7fa; font-weight: 700;">Hello, I built this custom voice AI studio...</span>
+          <div class="prompt-box" style="margin-top: 1rem; font-style: normal; font-weight: 500;" id="teleprompter-box">
+            Live Teleprompter Output: <span id="teleprompter-text" style="color: #a8c7fa; font-weight: 700;">Hello, I built this custom voice AI studio...</span>
+          </div>
         </div>
 
         <button class="btn-filled" style="margin-top: 1rem;" onclick="synthesizeScript()">
@@ -569,13 +587,15 @@
       </div>
 
       <div class="md-card">
-        <div class="card-label">
-          <span class="material-symbols-outlined">memory</span>
-          <span>Voice Models Registry</span>
-        </div>
-        <div id="model-list-box" style="font-size: 0.85rem;">
-          <div style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 0.9rem; border-radius: 14px; font-weight: 700; border: 1px solid rgba(168, 199, 250, 0.3);">
-            ✓ My Voice Model
+        <div>
+          <div class="card-label">
+            <span class="material-symbols-outlined">memory</span>
+            <span>Voice Models Registry</span>
+          </div>
+          <div id="model-list-box" style="font-size: 0.85rem;">
+            <div style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 0.9rem; border-radius: 14px; font-weight: 700; border: 1px solid rgba(168, 199, 250, 0.3);">
+              ✓ My Voice Model
+            </div>
           </div>
         </div>
       </div>
@@ -598,14 +618,16 @@
       </div>
 
       <div class="md-card">
-        <div class="card-label">
-          <span class="material-symbols-outlined">record_voice_over</span>
-          <span>Live Call Dialogue Stream</span>
-        </div>
+        <div>
+          <div class="card-label">
+            <span class="material-symbols-outlined">record_voice_over</span>
+            <span>Live Call Dialogue Stream</span>
+          </div>
 
-        <div id="call-dialogue-stream" style="min-height: 240px; margin-bottom: 1.25rem;">
-          <div class="chat-bubble chat-caller">
-            <strong>Caller:</strong> Hey! Thanks for reaching out. Have you built anything in voice AI recently?
+          <div id="call-dialogue-stream" style="min-height: 240px; margin-bottom: 1.25rem;">
+            <div class="chat-bubble chat-caller">
+              <strong>Caller:</strong> Hey! Thanks for reaching out. Have you built anything in voice AI recently?
+            </div>
           </div>
         </div>
 

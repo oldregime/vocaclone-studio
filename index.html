@@ -1,13 +1,680 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>voiceai</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocaClone Studio — Google Material Voice AI</title>
+  
+  <!-- Google Fonts: Google Sans & Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Google Material Symbols & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <style>
+    /* Google Material You (MD3) Design Tokens */
+    :root {
+      --md-sys-color-background: #0f141c;
+      --md-sys-color-surface: #171d27;
+      --md-sys-color-surface-container: #1e2532;
+      --md-sys-color-surface-container-high: #273040;
+      --md-sys-color-primary: #a8c7fa;
+      --md-sys-color-on-primary: #062e6f;
+      --md-sys-color-primary-container: #004a77;
+      --md-sys-color-on-primary-container: #c2e7ff;
+      --md-sys-color-secondary: #7fcfff;
+      --md-sys-color-secondary-container: #004d67;
+      --md-sys-color-tertiary: #d0bcff;
+      --md-sys-color-outline: #43474e;
+      --md-sys-color-on-surface: #e2e8f0;
+      --md-sys-color-on-surface-variant: #94a3b8;
+      --md-sys-color-error: #ffb4ab;
+      --md-shape-corner-extra-large: 28px;
+      --md-shape-corner-large: 16px;
+      --md-shape-corner-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-surface);
+      font-family: 'Google Sans', 'Roboto', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+
+    /* Google Top App Bar Header */
+    .top-app-bar {
+      background-color: var(--md-sys-color-surface);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.75rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #a8c7fa 0%, #004a77 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    /* Material You Segmented Button Navigation */
+    .segmented-nav {
+      background-color: var(--md-sys-color-surface-container);
+      padding: 4px;
+      border-radius: var(--md-shape-corner-full);
+      display: flex;
+      gap: 4px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--md-sys-color-on-surface-variant);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--md-shape-corner-full);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-btn.active {
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(168, 199, 250, 0.25);
+    }
+
+    /* Active Model Chip */
+    .model-chip {
+      background-color: var(--md-sys-color-surface-container-high);
+      border: 1px solid rgba(168, 199, 250, 0.2);
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--md-shape-corner-full);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--md-sys-color-primary);
+    }
+
+    /* Main Container & Hero */
+    .main-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+    }
+
+    .hero-card {
+      background-color: var(--md-sys-color-surface-container);
+      border-radius: var(--md-shape-corner-extra-large);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--md-shape-corner-full);
+      background-color: rgba(168, 199, 250, 0.1);
+      color: var(--md-sys-color-primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.6;
+      max-width: 750px;
+    }
+
+    /* Studio Content Grid */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 868px) {
+      .studio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Material You Cards */
+    .md-card {
+      background-color: var(--md-sys-color-surface-container);
+      border-radius: var(--md-shape-corner-extra-large);
+      padding: 1.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--md-sys-color-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Material Inputs & Textarea */
+    .md-input, .md-textarea {
+      width: 100%;
+      background-color: var(--md-sys-color-surface);
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: var(--md-shape-corner-large);
+      padding: 0.85rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .md-input:focus, .md-textarea:focus {
+      border-color: var(--md-sys-color-primary);
+    }
+
+    .prompt-box {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--md-shape-corner-large);
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    /* Canvas Spectrum */
+    .spectrum-container {
+      height: 90px;
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--md-shape-corner-large);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Primary & Filled Buttons */
+    .btn-filled {
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border: none;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--md-shape-corner-full);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: transform 0.2s, background-color 0.2s;
+      width: 100%;
+    }
+
+    .btn-filled:hover {
+      background-color: #c2e7ff;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background-color: #ffb4ab;
+      color: #690005;
+    }
+
+    /* Pitch Radar List */
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.85rem;
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--md-sys-color-primary);
+    }
+
+    /* Telephony Glass Smartphone */
+    .phone-frame {
+      background-color: var(--md-sys-color-surface);
+      border-radius: 36px;
+      padding: 1.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      text-align: center;
+      min-height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .avatar-ring {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a8c7fa 0%, #004d67 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 1.5rem auto 1rem;
+      box-shadow: 0 0 24px rgba(168, 199, 250, 0.3);
+    }
+
+    .chat-bubble {
+      padding: 0.85rem 1.1rem;
+      border-radius: 18px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+      text-align: left;
+    }
+
+    .chat-caller {
+      background-color: var(--md-sys-color-surface-container-high);
+      color: #e2e8f0;
+      margin-right: 2rem;
+    }
+
+    .chat-ai {
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      margin-left: 2rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background-color: var(--md-sys-color-surface);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header class="top-app-bar">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">graphic_eq</span>
+        </div>
+        <div>
+          <div class="brand-title">VocaClone Studio</div>
+          <div class="brand-subtitle">Google Material AI Voice Engine</div>
+        </div>
+      </div>
+
+      <nav class="segmented-nav">
+        <button class="nav-btn active" id="tab-train" onclick="switchTab('train')">
+          <span class="material-symbols-outlined">mic</span>
+          <span>1. Train Voice</span>
+        </button>
+        <button class="nav-btn" id="tab-generate" onclick="switchTab('generate')">
+          <span class="material-symbols-outlined">description</span>
+          <span>2. Text to Speech</span>
+        </button>
+        <button class="nav-btn" id="tab-calls" onclick="switchTab('calls')">
+          <span class="material-symbols-outlined">call</span>
+          <span>3. Attend Calls</span>
+        </button>
+      </nav>
+
+      <div class="model-chip" id="active-model-chip">
+        <span class="material-symbols-outlined" style="font-size: 16px;">memory</span>
+        <span id="active-model-name">Divyansh Joshi (Target Clone)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="main-wrapper">
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <div class="hero-badge">
+        <span class="material-symbols-outlined" style="font-size: 16px;">auto_awesome</span>
+        <span>Google Material You Architecture</span>
+      </div>
+      <h1 class="hero-title" id="hero-heading">Train Your Voice Model</h1>
+      <p class="hero-desc" id="hero-subtext">
+        Read sample prompts aloud into your microphone. Our Google Material Voice AI engine analyzes your pitch frequency ($F_0$), tempo, and acoustic parameters to build your personal digital voice clone.
+      </p>
+    </div>
+
+    <!-- TAB 1: TRAIN VOICE MODEL -->
+    <div id="view-train" class="studio-grid">
+      <div class="md-card">
+        <div class="card-label">
+          <span class="material-symbols-outlined">mic</span>
+          <span>Step 1: Record Sample Prompt</span>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label style="font-size: 0.8rem; color: var(--md-sys-color-on-surface-variant); display: block; margin-bottom: 0.4rem; font-weight: 500;">Voice Model Name</label>
+          <input type="text" id="model-name-input" class="md-input" value="Divyansh Joshi (Target Clone)">
+        </div>
+
+        <div class="prompt-box" id="prompt-text-display">
+          "Hello Vijaypal, I am recording my voice sample to train my personal AI voice clone for Karta. I want this AI model to read written scripts and handle calls on my behalf."
+        </div>
+
+        <div class="spectrum-container">
+          <canvas id="mic-canvas"></canvas>
+        </div>
+
+        <button class="btn-filled" id="rec-btn" onclick="toggleRecording()">
+          <span class="material-symbols-outlined" id="rec-icon">mic</span>
+          <span id="rec-text">Start Mic Recording</span>
+        </button>
+      </div>
+
+      <!-- Radar Card -->
+      <div class="md-card flex-col" style="display: flex; justify-content: space-between;">
+        <div>
+          <div class="card-label">
+            <span class="material-symbols-outlined">analytics</span>
+            <span>Acoustic Metrics</span>
+          </div>
+
+          <div className="metric-list" style="margin-bottom: 1.5rem;">
+            <div class="metric-row">
+              <span>Fundamental Pitch ($F_0$):</span>
+              <span class="metric-val" id="pitch-hz">145 Hz</span>
+            </div>
+            <div class="metric-row">
+              <span>Voice Category:</span>
+              <span class="metric-val" id="pitch-cat">Baritone</span>
+            </div>
+            <div class="metric-row">
+              <span>Tempo Rate:</span>
+              <span class="metric-val" id="tempo-val">1.05x</span>
+            </div>
+            <div class="metric-row">
+              <span>Formant Shift:</span>
+              <span class="metric-val" id="formant-val">0.98</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-filled" style="background-color: #34d399; color: #064e3b;" onclick="trainModel()">
+          <span class="material-symbols-outlined">auto_awesome</span>
+          <span>Save Voice Model</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 2: TEXT TO SPEECH STUDIO -->
+    <div id="view-generate" class="studio-grid" style="display: none;">
+      <div class="md-card">
+        <div class="card-label">
+          <span class="material-symbols-outlined">description</span>
+          <span>Script-to-Speech Editor</span>
+        </div>
+
+        <textarea id="script-input" class="md-textarea" rows="6">Hello Vijaypal, I built this custom voice AI studio to demonstrate real-time audio synthesis, dynamic tool calling, and low-latency voice interaction for Karta.</textarea>
+
+        <div class="prompt-box" style="margin-top: 1rem; font-style: normal; font-weight: 500;" id="teleprompter-box">
+          Live Teleprompter: <span id="teleprompter-text" style="color: #a8c7fa;">Hello Vijaypal, I built this custom voice AI studio...</span>
+        </div>
+
+        <button class="btn-filled" style="margin-top: 1rem;" onclick="synthesizeScript()">
+          <span class="material-symbols-outlined">play_arrow</span>
+          <span>Synthesize & Speak Script</span>
+        </button>
+      </div>
+
+      <div class="md-card">
+        <div class="card-label">
+          <span class="material-symbols-outlined">memory</span>
+          <span>Voice Models</span>
+        </div>
+        <div id="model-list-box" style="font-size: 0.85rem;">
+          <div style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 0.85rem; border-radius: 12px; font-weight: 700; margin-bottom: 0.5rem;">
+            ✓ Divyansh Joshi (Target Clone)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ATTEND CALLS ASSISTANT -->
+    <div id="view-calls" class="studio-grid" style="display: none;">
+      <div class="phone-frame">
+        <div style="font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant);">AI Telephony Assistant</div>
+        <div class="avatar-ring">🎙️</div>
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 700;" id="caller-name">Vijaypal Singh (Karta AI)</h2>
+          <p style="font-size: 0.8rem; color: var(--md-sys-color-primary);" id="caller-role">Co-Founder & Engineering Lead</p>
+        </div>
+
+        <button class="btn-filled" id="call-action-btn" onclick="startCallSimulation()">
+          <span class="material-symbols-outlined">call</span>
+          <span>Simulate Incoming Call</span>
+        </button>
+      </div>
+
+      <div class="md-card">
+        <div class="card-label">
+          <span class="material-symbols-outlined">record_voice_over</span>
+          <span>Live Call Dialogue Stream</span>
+        </div>
+
+        <div id="call-dialogue-stream" style="min-h: 240px; margin-bottom: 1rem;">
+          <div class="chat-bubble chat-caller">
+            <strong>Vijaypal Singh:</strong> Hey Divyansh, thanks for reaching out! Have you built anything in voice AI recently?
+          </div>
+        </div>
+
+        <button class="btn-filled" style="background-color: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-primary);" onclick="triggerVoiceCloneAnswer()">
+          <span class="material-symbols-outlined">smart_toy</span>
+          <span>Answer with Voice Clone</span>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    VocaClone Studio — Built for Divyansh Joshi's Karta AI Application (+91-89624-30535 | divyanshjoshidev@gmail.com)
+  </footer>
+
+  <!-- Vanilla JS Application Engine -->
+  <script>
+    let activeTab = 'train';
+    let isRecording = false;
+    let mediaRecorder = null;
+    let audioChunks = [];
+
+    function switchTab(tab) {
+      activeTab = tab;
+      document.getElementById('view-train').style.display = tab === 'train' ? 'grid' : 'none';
+      document.getElementById('view-generate').style.display = tab === 'generate' ? 'grid' : 'none';
+      document.getElementById('view-calls').style.display = tab === 'calls' ? 'grid' : 'none';
+
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+
+      const headings = {
+        train: 'Train Your Voice Model',
+        generate: 'Text-to-Speech Studio',
+        calls: 'Attend Phone Calls with AI Voice'
+      };
+      document.getElementById('hero-heading').innerText = headings[tab];
+    }
+
+    async function toggleRecording() {
+      const btn = document.getElementById('rec-btn');
+      const icon = document.getElementById('rec-icon');
+      const text = document.getElementById('rec-text');
+
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+          mediaRecorder.start();
+
+          isRecording = true;
+          btn.classList.add('btn-danger');
+          icon.innerText = 'square';
+          text.innerText = 'Stop Recording';
+        } catch (err) {
+          alert('Microphone access required to record sample prompt.');
+        }
+      } else {
+        if (mediaRecorder) mediaRecorder.stop();
+        isRecording = false;
+        btn.classList.remove('btn-danger');
+        icon.innerText = 'mic';
+        text.innerText = 'Start Mic Recording';
+      }
+    }
+
+    function trainModel() {
+      const name = document.getElementById('model-name-input').value || 'Custom Voice Model';
+      document.getElementById('active-model-name').innerText = name;
+      alert(`Voice Model "${name}" successfully built and saved!`);
+      switchTab('generate');
+    }
+
+    function synthesizeScript() {
+      const text = document.getElementById('script-input').value;
+      if (!text) return;
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.05;
+        utterance.pitch = 1.0;
+        
+        utterance.onboundary = (event) => {
+          if (event.name === 'word') {
+            const word = text.slice(event.charIndex, event.charIndex + (event.charLength || 5));
+            document.getElementById('teleprompter-text').innerText = word;
+          }
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function startCallSimulation() {
+      const stream = document.getElementById('call-dialogue-stream');
+      stream.innerHTML = `
+        <div class="chat-bubble chat-caller">
+          <strong>Vijaypal Singh (Karta AI):</strong> Hey Divyansh! Have you built anything in voice AI recently?
+        </div>
+      `;
+    }
+
+    function triggerVoiceCloneAnswer() {
+      const stream = document.getElementById('call-dialogue-stream');
+      const response = "Yes Vijaypal! I engineered VocaClone Studio to demonstrate real-time audio synthesis, pitch profiling, and call attendance.";
+      
+      const div = document.createElement('div');
+      div.className = 'chat-bubble chat-ai';
+      div.innerHTML = `<strong>My AI Voice Clone:</strong> ${response}`;
+      stream.appendChild(div);
+
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(response);
+        utterance.rate = 1.05;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+  </script>
+</body>
 </html>

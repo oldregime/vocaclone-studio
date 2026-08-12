@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VocaClone Studio — Google Material 3 Voice AI</title>
+  <title>VocaClone Studio — AI Voice Engine</title>
   
   <!-- Google Fonts: Google Sans & Roboto -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
   <style>
-    /* Google Material You (MD3) Refined Design Tokens */
+    /* Material You Refined Design Tokens */
     :root {
       --md-sys-color-background: #0b0f17;
       --md-sys-color-surface: #131822;
@@ -55,7 +55,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Google Top App Bar Header */
+    /* Top App Bar Header */
     .top-app-bar {
       background-color: rgba(19, 24, 34, 0.85);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -105,7 +105,7 @@
       font-weight: 500;
     }
 
-    /* Material You Segmented Button Navigation */
+    /* Segmented Button Navigation */
     .segmented-nav {
       background-color: var(--md-sys-color-surface-container);
       padding: 5px;
@@ -218,7 +218,7 @@
       }
     }
 
-    /* Material You Cards */
+    /* Cards */
     .md-card {
       background-color: var(--md-sys-color-surface-container);
       border-radius: var(--md-shape-corner-extra-large);
@@ -239,7 +239,7 @@
       gap: 0.5rem;
     }
 
-    /* Material Inputs & Textarea */
+    /* Inputs & Textarea */
     .md-input, .md-textarea {
       width: 100%;
       background-color: var(--md-sys-color-surface);
@@ -288,7 +288,7 @@
       height: 100%;
     }
 
-    /* FABULOUS GOOGLE MATERIAL 3 BUTTON SYSTEM */
+    /* BUTTON SYSTEM */
     .btn-filled {
       background: linear-gradient(135deg, #a8c7fa 0%, #669df6 100%);
       color: var(--md-sys-color-on-primary);
@@ -318,7 +318,6 @@
       transform: scale(0.97);
     }
 
-    /* RECREATED SAVE VOICE MODEL BUTTON */
     .btn-save-model {
       background: linear-gradient(135deg, #34d399 0%, #059669 100%);
       color: #ffffff;
@@ -374,7 +373,7 @@
       color: var(--md-sys-color-primary);
     }
 
-    /* Telephony Glass Smartphone */
+    /* Smartphone Frame */
     .phone-frame {
       background-color: var(--md-sys-color-surface);
       border-radius: 38px;
@@ -429,8 +428,9 @@
       background-color: var(--md-sys-color-surface);
       padding: 1.35rem 1.75rem;
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--md-sys-color-on-surface-variant);
+      font-weight: 500;
     }
   </style>
 </head>
@@ -445,7 +445,7 @@
         </div>
         <div>
           <div class="brand-title">VocaClone Studio</div>
-          <div class="brand-subtitle">Google Material You Voice AI Engine</div>
+          <div class="brand-subtitle">AI Voice Studio</div>
         </div>
       </div>
 
@@ -466,7 +466,7 @@
 
       <div class="model-chip" id="active-model-chip">
         <span class="material-symbols-outlined" style="font-size: 16px;">memory</span>
-        <span id="active-model-name">Divyansh Joshi (Target Clone)</span>
+        <span id="active-model-name">My Voice Model</span>
       </div>
     </div>
   </header>
@@ -478,11 +478,11 @@
     <div class="hero-card">
       <div class="hero-badge">
         <span class="material-symbols-outlined" style="font-size: 16px;">auto_awesome</span>
-        <span>Google Material 3 Architecture</span>
+        <span>AI Voice Architecture</span>
       </div>
       <h1 class="hero-title" id="hero-heading">Train Your Voice Model</h1>
       <p class="hero-desc" id="hero-subtext">
-        Read sample prompts aloud into your microphone. Our Google Material Voice AI engine analyzes your pitch frequency ($F_0$), tempo, and acoustic parameters to build your personal digital voice clone.
+        Read sample prompts aloud into your microphone. Our voice AI engine analyzes your pitch frequency ($F_0$), tempo, and acoustic parameters to build your personal digital voice clone.
       </p>
     </div>
 
@@ -496,11 +496,11 @@
 
         <div style="margin-bottom: 1.25rem;">
           <label style="font-size: 0.8rem; color: var(--md-sys-color-on-surface-variant); display: block; margin-bottom: 0.45rem; font-weight: 600;">Voice Model Identifier</label>
-          <input type="text" id="model-name-input" class="md-input" value="Divyansh Joshi (Target Clone)">
+          <input type="text" id="model-name-input" class="md-input" value="My Voice Model">
         </div>
 
         <div class="prompt-box" id="prompt-text-display">
-          "Hello Vijaypal, I am recording my voice sample to train my personal AI voice clone for Karta. I want this AI model to read written scripts and handle calls on my behalf."
+          "Hello, I am recording my voice sample to train my personal AI voice clone. I want this AI model to read written scripts and handle calls on my behalf."
         </div>
 
         <div class="spectrum-container">
@@ -541,7 +541,6 @@
           </div>
         </div>
 
-        <!-- RECREATED FABULOUS SAVE VOICE MODEL BUTTON -->
         <button class="btn-save-model" onclick="trainModel()">
           <span class="material-symbols-outlined">task_alt</span>
           <span>Save Voice Model</span>
@@ -557,10 +556,10 @@
           <span>Script-to-Speech Editor</span>
         </div>
 
-        <textarea id="script-input" class="md-textarea" rows="6">Hello Vijaypal, I built this custom voice AI studio to demonstrate real-time audio synthesis, dynamic tool calling, and low-latency voice interaction for Karta.</textarea>
+        <textarea id="script-input" class="md-textarea" rows="6">Hello, I built this custom voice AI studio to demonstrate real-time audio synthesis, dynamic tool calling, and low-latency voice interaction.</textarea>
 
         <div class="prompt-box" style="margin-top: 1rem; font-style: normal; font-weight: 500;" id="teleprompter-box">
-          Live Teleprompter Output: <span id="teleprompter-text" style="color: #a8c7fa; font-weight: 700;">Hello Vijaypal, I built this custom voice AI studio...</span>
+          Live Teleprompter Output: <span id="teleprompter-text" style="color: #a8c7fa; font-weight: 700;">Hello, I built this custom voice AI studio...</span>
         </div>
 
         <button class="btn-filled" style="margin-top: 1rem;" onclick="synthesizeScript()">
@@ -576,7 +575,7 @@
         </div>
         <div id="model-list-box" style="font-size: 0.85rem;">
           <div style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 0.9rem; border-radius: 14px; font-weight: 700; border: 1px solid rgba(168, 199, 250, 0.3);">
-            ✓ Divyansh Joshi (Target Clone)
+            ✓ My Voice Model
           </div>
         </div>
       </div>
@@ -588,8 +587,8 @@
         <div style="font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); font-weight: 600;">AI Telephony Assistant Node</div>
         <div class="avatar-ring">🎙️</div>
         <div>
-          <h2 style="font-size: 1.3rem; font-weight: 700;" id="caller-name">Vijaypal Singh (Karta AI)</h2>
-          <p style="font-size: 0.8rem; color: var(--md-sys-color-primary); font-weight: 600;" id="caller-role">Co-Founder & Engineering Lead</p>
+          <h2 style="font-size: 1.3rem; font-weight: 700;" id="caller-name">Recruiter Inquiry</h2>
+          <p style="font-size: 0.8rem; color: var(--md-sys-color-primary); font-weight: 600;" id="caller-role">Engineering Lead</p>
         </div>
 
         <button class="btn-filled" id="call-action-btn" onclick="startCallSimulation()">
@@ -606,7 +605,7 @@
 
         <div id="call-dialogue-stream" style="min-height: 240px; margin-bottom: 1.25rem;">
           <div class="chat-bubble chat-caller">
-            <strong>Vijaypal Singh:</strong> Hey Divyansh, thanks for reaching out! Have you built anything in voice AI recently?
+            <strong>Caller:</strong> Hey! Thanks for reaching out. Have you built anything in voice AI recently?
           </div>
         </div>
 
@@ -619,9 +618,9 @@
 
   </main>
 
-  <!-- Footer -->
+  <!-- Clean Footer -->
   <footer>
-    VocaClone Studio — Built for Divyansh Joshi's Karta AI Application (+91-89624-30535 | divyanshjoshidev@gmail.com)
+    Made with ❤️ and Chat
   </footer>
 
   <!-- Vanilla JS Application Engine -->
@@ -709,14 +708,14 @@
       const stream = document.getElementById('call-dialogue-stream');
       stream.innerHTML = `
         <div class="chat-bubble chat-caller">
-          <strong>Vijaypal Singh (Karta AI):</strong> Hey Divyansh! Have you built anything in voice AI recently?
+          <strong>Caller:</strong> Hey! Have you built anything in voice AI recently?
         </div>
       `;
     }
 
     function triggerVoiceCloneAnswer() {
       const stream = document.getElementById('call-dialogue-stream');
-      const response = "Yes Vijaypal! I engineered VocaClone Studio to demonstrate real-time audio synthesis, pitch profiling, and call attendance.";
+      const response = "Yes! I engineered VocaClone Studio to demonstrate real-time audio synthesis, pitch profiling, and call attendance.";
       
       const div = document.createElement('div');
       div.className = 'chat-bubble chat-ai';
